@@ -19,6 +19,10 @@ void usage() {
 
 vector<string> readlines(string filepath) {
   ifstream file(filepath);
+  if (file.fail()) {
+    cerr << "Cannot open file " << filepath << ", terminating" << endl;
+    exit(-1);
+  }
   string line;
   vector<string> lines;
   while (getline(file, line)) {
@@ -39,6 +43,9 @@ vector<string> split(string line) {
 }
 
 void printlines(vector<string> lines, int start, int end) {
+  if (start > lines.size()) {
+    return;
+  }
   for (auto it = lines.begin() + start; it != lines.end()
       && it != lines.begin() + end; it++) {
     cout << *it << endl;
@@ -68,7 +75,7 @@ int main(int argc, char** argv) {
       } else if (numtok == 3) {
         printlines(lines, c + x - 1, c + y);
       } else {
-        cerr << "error: invalid input" << endl;
+        cerr << "error: invalid input (C-d to exit)" << endl;
       }
     }
   }
