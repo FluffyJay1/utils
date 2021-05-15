@@ -10,7 +10,7 @@ void usage() {
   cout << "Usage: intline <file>\n"
   "Reads the following newline-separated commands from stdin:\n"
   "<x> <y>: prints the lines starting from x up to and including y\n"
-  "<x> <c> <y>: prints the lines using vim relativenumber, where"
+  "<x> <y> <c>: prints the lines using vim relativenumber, where"
     "c is the current line and x and y are relative line numbers,"
     "negative if behind cursor\n"
   "r: reloads the file\n";
@@ -61,14 +61,15 @@ int main(int argc, char** argv) {
     int x, y, c;
     if (command == "r") {
       lines = readlines(filepath);
-    } else if (sscanf(command.c_str(), "%d %d", &x, &y) == 2 
-        && y >= x && x >= 1) {
-      printlines(lines, x - 1, y);
-    } else if (sscanf(command.c_str(), "%d %d %d", &x, &c, &y) == 3
-      && y >= x && c + x >= 1) {
-      printlines(lines, c + x - 1, c + y);
     } else {
-      cerr << "error: invalid command" << endl;
+      int numtok = sscanf(command.c_str(), "%d %d %d", &x, &y, &c);
+      if (numtok == 2) {
+        printlines(lines, x - 1, y);
+      } else if (numtok == 3) {
+        printlines(lines, c + x - 1, c + y);
+      } else {
+        cerr << "error: invalid input" << endl;
+      }
     }
   }
   cerr << "intline exiting" << endl;
