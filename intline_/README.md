@@ -37,6 +37,9 @@ Jupyter notebook on the command line, by simply entering the start and end
 lines of the "cell". If I make any changes to the file I enter "r" and keep
 executing what I want.
 
+__Note: if you want to do this with matplotlib, avoid using the TkAgg backend 
+(which is the default) or it may hang on matplotlib.pyplot.plot()__
+
 In the future I may implement a "cell" delimiting feature, such that you
 can just enter a cell name and it prints ur cell
 
