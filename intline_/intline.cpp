@@ -3,16 +3,19 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <cstring>
 
 using namespace std;
 
 void usage() {
   cout << "Usage: intline <file>\n"
   "Reads the following newline-separated commands from stdin:\n"
+  "<x>: prints line x \n"
   "<x> <y>: prints the lines starting from x up to and including y\n"
   "<x> <y> <c>: prints the lines using vim relativenumber, where"
     "c is the current line and x and y are relative line numbers,"
     "negative if behind cursor\n"
+  "p <whatever>: prints everything after the first p token verbatim, as a line\n"
   "r: reloads the file\n";
   exit(0);
 }
@@ -70,10 +73,14 @@ int main(int argc, char** argv) {
       lines = readlines(filepath);
     } else {
       int numtok = sscanf(command.c_str(), "%d %d %d", &x, &y, &c);
-      if (numtok == 2) {
+      if (numtok == 1 && x > 0) {
+        printlines(lines, x - 1, x);
+      } else if (numtok == 2 && x > 0 && y >= x) {
         printlines(lines, x - 1, y);
-      } else if (numtok == 3) {
+      } else if (numtok == 3 && c + x > 0 && y >= x) {
         printlines(lines, c + x - 1, c + y);
+      } else if (command.find("p ") == 0) {
+        cout << command.substr(strlen("p ")) << endl;
       } else {
         cerr << "error: invalid input (C-d to exit)" << endl;
       }
