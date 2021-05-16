@@ -11,12 +11,17 @@ Lets you interactively print specified lines from a file
 Stores `file` in a buffer, closes the file, then reads from stdin. Each line in 
 stdin is considered a command. The valid commands are:
 
+- `<x>` : Print line `x` from `file` to stdout
+
 - `<x> <y>`: Print lines to stdout from `file` starting at line `x` to line
   `y`, inclusive
 
 - `<x> <y> <c>`: Print lines to stdout assuming you have `relativenumber` set,
   where `c` is your cursor's current position and `x` and `y` are the relative
   numbers, negative to indicate line before the cursor
+  
+- `p <whatever>`: Print everything after the "p " verbatim, ending with a 
+  newline
 
 - `r`: Reload the file
 
