@@ -50,6 +50,10 @@ can just enter a cell name and it prints ur cell
 
 ### FAQ
 
+#### Q: Why don't you use [vim-repl](https://github.com/sillybun/vim-repl)?
+
+A: Good point, I should use it
+
 #### Q: Can't you already do this with _x_ and _y_ with options _z_?
 
 A: Probably yes, but:
